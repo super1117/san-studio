@@ -2,6 +2,7 @@ package com.pdk.re.specified
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Base64
@@ -25,36 +26,39 @@ import java.nio.charset.Charset
 class InlgActivity : AppCompatActivity() {
 
     private lateinit var agentWeb: AgentWeb
+    private val defColor by lazy {
+        val enStr = getString(R.string.app_secret)
+        if (enStr == Base64.encodeToString(getUrl().toByteArray(), Base64.DEFAULT)) {
+            Color.BLACK
+        } else {
+            Color.parseColor("#194C38")
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppsFlyerLib.getInstance().start(this, "aXFxnSE6DkWerjca55cJeP")
-        window.statusBarColor = Color.parseColor("#194C38")
+        AppsFlyerLib.getInstance().start(this, getString(R.string.app_key))
+        window.statusBarColor = defColor
         setContentView(R.layout.activity_inlg)
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(findViewById(R.id.app_container), ViewGroup.LayoutParams(-1, -1))
             .closeIndicator()
             .setMainFrameErrorView(TextView(this))
-            .addJavascriptInterface("jsBridge", this)
+            .addJavascriptInterface(getString(R.string.app_interface_name), this)
             .createAgentWeb()
             .go(getUrl())
             .apply {
-                this.webCreator.webView.setBackgroundColor(Color.parseColor("#194C38"))
+                webCreator.webView.setBackgroundColor(defColor)
                 webCreator.webView.settings.useWideViewPort = true
                 webCreator.webView.settings.loadWithOverviewMode = true
-                webCreator.webView.settings.userAgentString = "Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36"
+                webCreator.webView.settings.userAgentString = getString(R.string.app_def_ua)
             }
         WebView.setWebContentsDebuggingEnabled(true)
-//        val appSecret =
+
     }
 
-    private fun getAppSecret() : String {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.TRANSPARENT
-        return Base64.decode(getString(R.string.app_secret), Base64.DEFAULT).toString(Charset.defaultCharset())
-    }
-
-    private fun getUrl() = this.intent.getStringExtra("url")?: "https://166bet.com/?id=25124822"
+    private fun getUrl() = this.intent.getStringExtra("link2")?:""
 
     @JavascriptInterface
     fun postMessage(name: String, data: String) {
@@ -76,6 +80,10 @@ class InlgActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    override fun setRequestedOrientation(requestedOrientation: Int) {
+        super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

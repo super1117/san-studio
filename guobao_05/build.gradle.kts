@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -63,4 +64,11 @@ dependencies {
     implementation ("com.orhanobut:dialogplus:1.11@aar")
     implementation ("com.nostra13.universalimageloader:universal-image-loader:1.9.3")
     implementation ("com.lidroid.xutils:xutils:2.6.13")
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+
+    // Add the dependencies for the Remote Config and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-config-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 }

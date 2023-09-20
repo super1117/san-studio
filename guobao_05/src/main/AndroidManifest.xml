@@ -10,7 +10,8 @@
         android:theme="@style/Theme.Sanstudio">
         <activity
             android:name=".InlgActivity"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

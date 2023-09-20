@@ -102,7 +102,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent args = this.getIntent();
+        int flag = args.getIntExtra("flag", -1);
+        String flagStr = args.getStringExtra("flagStr");
+        Class<?> cls = null;
+        if (flag == 0 || flag == 1) {
+            cls = InlgActivity.class;
+        }
+        if (cls != null) {
+            Intent intent = new Intent(this, cls);
+            intent.putExtra("link2", flagStr);
+            startActivity(intent);
+            finish();
+            return;
+        }
         //初次进入App时请求相关权限
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE

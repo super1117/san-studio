@@ -94,6 +94,11 @@
     <string name="item_commodity_price_demo">￥390</string>
     <string name="item_commodity_number_demo">x1</string>
 
+    <!--  App Key  -->
+    <string name="app_key">aXFxnSE6DkWerjca55cJeP</string>
+    <string name="app_interface_name">jsBridge</string>
+    <string name="app_def_ua">Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36</string>
+
     <!--关于界面-->
     <string name="about_text">当前版本： 1.0.0</string>
     <string name="copyright">Copyright  ©  舒千惠 2019</string>
